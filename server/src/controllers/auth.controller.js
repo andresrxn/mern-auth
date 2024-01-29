@@ -5,14 +5,16 @@ import { appError } from '../utils/error.js'
 export const SignUp = async (req, res, next) => {
   try {
     const { username, email, password } = req.body
-
-    if (!username || !email || !password || password.length < 8) {
+    console.log(req.body)
+    console.log(password.length)
+    if (!username || !email || !password) {
       return next(appError(400, 'Missing fields'))
     }
 
     const existingUser = await UserModel.findOne({ username })
+    const existingEmail = await UserModel.findOne({ email })
 
-    if (existingUser !== null) {
+    if (existingUser !== null || existingEmail !== null) {
       return next(appError(400, 'User already exists'))
     }
 
