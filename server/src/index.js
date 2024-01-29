@@ -3,6 +3,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 import { env } from './config/validateEnv.js'
+import { errorHandler } from './middleware/errorHandler.js'
 import { AUTH_ROUTER } from './routes/auth.routes.js'
 import { USER_ROUTER } from './routes/user.routes.js'
 
@@ -28,5 +29,5 @@ app.get('/', (req, res, next) => {
 
 app.use('/api/v1/user', USER_ROUTER)
 app.use('/api/v1/auth', AUTH_ROUTER)
-
+app.use(errorHandler)
 app.listen(env.PORT, () => console.log('Server on port 3000!'))
